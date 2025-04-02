@@ -1,6 +1,5 @@
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
 
 public class Client {
     private static final int PORT = 7777;
@@ -14,18 +13,16 @@ public class Client {
         out = new PrintWriter(socket.getOutputStream(), true);
     }
 
-    public void enviaMissatges() {
-        Scanner sc = new Scanner(System.in);
+    public void enviaMissatges() throws IOException {
+        BufferedReader teclat = new BufferedReader(new InputStreamReader(System.in));
         String missatge;
 
         while (true) {
             System.out.print("Escriu un missatge (enter buit per sortir): ");
-            missatge = sc.nextLine();
-            if (missatge.isEmpty()) break; // sortim si prems enter sense escriure res
+            missatge = teclat.readLine();
+            if (missatge == null || missatge.isEmpty()) break;
             out.println(missatge);
         }
-
-        sc.close();
     }
 
     public void tanca() throws IOException {
